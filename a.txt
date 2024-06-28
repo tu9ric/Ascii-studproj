@@ -1,0 +1,4 @@
+1.Makefile не работает
+2.Нужно дописать код для ASCII текста и изображения
+3.Команда для создания main.o: g++ -c main.cpp -I"C:\SFML-2.6.1-windows-gcc-13.1.0-mingw-64-bit\SFML-2.6.1\include" -DSFML_STATIC
+4.Команда для создания main.exe: g++ main.o -o main -L"C:\SFML-2.6.1-windows-gcc-13.1.0-mingw-64-bit\SFML-2.6.1\lib" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -mwindows -lsfml-main
