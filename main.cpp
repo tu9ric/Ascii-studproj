@@ -1,71 +1,103 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 
-int main()
-{ 
-    setlocale(LC_ALL, "Russian");
-    sf::RenderWindow window(sf::VideoMode(800, 600), "ASCII Art Converter");
+bool isButtonHover(sf::FloatRect button, sf::Vector2f mp)
+{
+    if (button.contains(mp))
+    {
+        return true;
+    }
+    return false;
+}
 
-    // Шрифт для текста кнопок
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(800, 600), "My first Visual Studio window!");
+
     sf::Font font;
-    if (!font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf")) {
-        std::cerr << "Failed to load font" << std::endl;
+    if (!font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf"))
+    {
         return 1;
     }
 
-    // Создание текстов кнопок
-    sf::Text mode1Text, mode2Text;
-    mode1Text.setFont(font);
-    mode1Text.setString("Convert images to ASCII art");
-    mode1Text.setCharacterSize(24);
-    mode1Text.setFillColor(sf::Color::White);
-    mode1Text.setPosition(100, 200);
+    sf::Text button1("1.Convert images to ASCII art", font, 24);
+    button1.setFillColor(sf::Color::White);
+    button1.setPosition(50, 300);
 
-    mode2Text.setFont(font);
-    mode2Text.setString("Print words in ASCII code");
-    mode2Text.setCharacterSize(24);
-    mode2Text.setFillColor(sf::Color::White);
-    mode2Text.setPosition(100, 300);
+    sf::Text button2("2.Print words in ASCII code", font, 24);
+    button2.setFillColor(sf::Color::White);
+    button2.setPosition(50, 350);
 
     while (window.isOpen())
     {
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+        sf::Vector2f mp = window.mapPixelToCoords(mousePosition);
+
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
-            if (event.type == sf::Event::MouseButtonPressed)
             {
-                if (event.mouseButton.button == sf::Mouse::Left)
+                window.close();
+            }
+
+            if (isButtonHover(button1.getGlobalBounds(), mp))
+            {
+                if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
                 {
-                    // Получаем позицию окна на экране
-                    sf::Vector2i windowPosition = window.getPosition();
+                    sf::RenderWindow newWindow(sf::VideoMode(400, 200), "Convert images to ASCII art!");
+                    sf::Text text("it works! I'm shocked!1", font, 24);
+                    text.setFillColor(sf::Color::White);
+                    text.setPosition(150, 100);
+                    newWindow.draw(text);
+                    newWindow.display();
 
-                    // Получаем позицию нажатия относительно окна
-                    sf::Vector2i mousePosition = sf::Mouse::getPosition();
-
-                    // Корректируем позицию нажатия относительно окна
-                    mousePosition.x -= windowPosition.x;
-                    mousePosition.y -= windowPosition.y;
-
-                    // Проверяем, на какую кнопку нажали
-                    if (mode1Text.getGlobalBounds().contains(mousePosition.x, mousePosition.y))
+                    while (newWindow.isOpen())
                     {
-                        std::cout << "Selected mode 1: Convert images to ASCII art" << std::endl;
-                        // Здесь нужно вызвать функцию для загрузки изображения и конвертации в ASCII-арт
+                        sf::Event newEvent;
+                        while (newWindow.pollEvent(newEvent))
+                        {
+                            if (newEvent.type == sf::Event::Closed)
+                            {
+                                newWindow.close();
+                            }
+                        }
                     }
-                    else if (mode2Text.getGlobalBounds().contains(mousePosition.x, mousePosition.y))
+                }
+            }
+
+            if (isButtonHover(button2.getGlobalBounds(), mp))
+            {
+                if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+                {
+                    sf::RenderWindow newWindow(sf::VideoMode(400, 200), "Print words in ASCII code");
+                    sf::Text text("it works! I'm shocked!2", font, 24);
+                    text.setFillColor(sf::Color::White);
+                    text.setPosition(150, 100);
+                    newWindow.draw(text);
+                    newWindow.display();
+
+                    while (newWindow.isOpen())
                     {
-                        std::cout << "Selected mode 2: Print words in ASCII code" << std::endl;
-                        // Здесь нужно вызвать функцию для печати слов в ASCII коде
+                        sf::Event newEvent;
+                        while (newWindow.pollEvent(newEvent))
+                        {
+                            if (newEvent.type == sf::Event::Closed)
+                            {
+                                newWindow.close();
+                            }
+                        }
                     }
                 }
             }
         }
 
-        window.clear();
-        window.draw(mode1Text);
-        window.draw(mode2Text);
+        window.clear(sf::Color::Black);
+
+        window.draw(button1);
+        window.draw(button2);
+
         window.display();
     }
 
