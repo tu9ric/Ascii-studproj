@@ -1,1 +1,5 @@
 # Ascii-studproj
+Для того что запустить программу нужно создать файлы main.o и main.exe
+Необходимо создать терминал 
+Для создания файла main.o необходимо ввести команду в терминал: g++ -c main.cpp -I"C:\SFML-2.6.1-windows-gcc-13.1.0-mingw-64-bit\SFML-2.6.1\include" -DSFML_STATIC
+Для создания файла main.exe необходимо ввести команду в терминал: g++ main.o -o main -L"C:\SFML-2.6.1-windows-gcc-13.1.0-mingw-64-bit\SFML-2.6.1\lib" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -mwindows -lsfml-main
