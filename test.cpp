@@ -1,11 +1,3 @@
-1.Makefile не работает
-2.Нужно дописать код для ASCII текста и изображения
-3.Команда для создания main.o: g++ -c main.cpp -I"C:\SFML-2.6.1-windows-gcc-13.1.0-mingw-64-bit\SFML-2.6.1\include" -DSFML_STATIC
-4.Команда для создания main.exe: g++ main.o -o main -L"C:\SFML-2.6.1-windows-gcc-13.1.0-mingw-64-bit\SFML-2.6.1\lib" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -mwindows -lsfml-main
-
--std=c++11
-
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
@@ -106,60 +98,6 @@ int main()
         window.draw(button1);
         window.draw(button2);
 
-        window.display();
-    }
-
-    return 0;
-}
-
-
-#include <SFML/Graphics.hpp>
-#include <Windows.h>
-#include <iostream>
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(800, 600), "File Loader");
-
-    OPENFILENAMEW ofn;
-    wchar_t szFile[260]; // Буфер для имени файла
-
-    ZeroMemory(&ofn, sizeof(ofn));
-    ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = NULL;
-    ofn.lpstrFile = szFile;
-    ofn.lpstrFile[0] = L'\0';
-    ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = L"All Files\0*.*\0";
-    ofn.nFilterIndex = 1;
-    ofn.lpstrFileTitle = NULL;
-    ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = NULL;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-
-    if (GetOpenFileNameW(&ofn) == TRUE)
-    {
-        // Имя выбранного файла находится в ofn.lpstrFile
-        std::wstring filenameWStr = ofn.lpstrFile;
-        std::string filename(filenameWStr.begin(), filenameWStr.end());
-        std::cout << "Selected file: " << filename << std::endl;
-
-        // Здесь можно продолжить обработку выбранного файла
-    }
-    else
-    {
-        std::cout << "No file selected." << std::endl;
-    }
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
         window.display();
     }
 
