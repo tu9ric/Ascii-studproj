@@ -310,7 +310,7 @@ int main() {
                 }
             }
         }
-        if (idleClock.getElapsedTime().asSeconds() > 10) {
+        if (idleClock.getElapsedTime().asSeconds() > 5) {
             displayAsciiAnimation(window, font);
             idleClock.restart();
         }
